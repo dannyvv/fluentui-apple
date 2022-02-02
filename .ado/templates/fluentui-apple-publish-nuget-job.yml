@@ -1,3 +1,6 @@
+variables:
+  Packaging.EnableSBOMSigning: true
+
 jobs:
 - job: fluentui_apple_publish_nuget
   pool:
@@ -16,6 +19,11 @@ jobs:
   # generate the sanitizedBuildNumber environment variable
   - bash: 'scripts/generate_build_number.sh'
     displayName: 'Generate Build Number'
+    
+  - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
+    displayName: 'SBOM Generation Task'
+    inputs:
+      BuildDropPath: '$(System.ArtifactsDirectory)/buildOutput'
 
   # pack the nuspec
   - task: NuGetCommand@2
