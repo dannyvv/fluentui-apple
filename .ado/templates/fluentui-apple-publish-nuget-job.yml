@@ -21,9 +21,9 @@ jobs:
 
    # generate Software Bill of Materials (SBOM)
   - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
-    displayName: 'SBOM Generation Task'
+    displayName: 'Generate SBOM'
     inputs:
-      BuildDropPath: '$(System.ArtifactsDirectory)/buildOutput'
+      BuildDropPath: '$(Build.ArtifactStagingDirectory)'
 
   # pack the nuspec
   - task: NuGetCommand@2
