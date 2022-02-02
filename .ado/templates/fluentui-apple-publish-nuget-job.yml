@@ -1,8 +1,7 @@
-variables:
-  Packaging.EnableSBOMSigning: true
-
 jobs:
 - job: fluentui_apple_publish_nuget
+  variables:
+    Packaging.EnableSBOMSigning: true
   pool:
     vmImage: 'macos-11'
   displayName: FluentUI Apple Publish NuGet
@@ -19,7 +18,8 @@ jobs:
   # generate the sanitizedBuildNumber environment variable
   - bash: 'scripts/generate_build_number.sh'
     displayName: 'Generate Build Number'
-    
+
+   # generate Software Bill of Materials (SBOM)
   - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
     displayName: 'SBOM Generation Task'
     inputs:
