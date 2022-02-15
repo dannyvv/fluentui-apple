@@ -50,31 +50,16 @@ rsync -a "DerivedData/Build/Intermediates.noindex/FluentUI.build/Release-iphones
 cd $PRODUCTS_DIR
 
 # Copy each platform
-make_dir_if_necessary "nuget/Debug-macosx"
-echo "Copy Debug-macosx Framework into nuget folder"
-rsync_excluding_swift_source_info_files Debug/FluentUI.framework/ nuget/Debug-macosx/FluentUI.framework/
 
 make_dir_if_necessary "nuget/Ship-macosx"
 echo "Copy Ship-macosx Framework into nuget folder"
 rsync_excluding_swift_source_info_files Release/FluentUI.framework/ nuget/Ship-macosx/FluentUI.framework/
-
-make_dir_if_necessary "nuget/Debug-iphoneos"
-echo "Copy Debug-iphoneos build output into nuget folder"
-rsync -a Debug-iphoneos/libFluentUI.a nuget/Debug-iphoneos/
-rsync_excluding_swift_source_info_files Debug-iphoneos/FluentUI.swiftmodule/ nuget/Debug-iphoneos/FluentUI.swiftmodule/
-rsync -a Debug-iphoneos/FluentUIResources-ios.bundle/ nuget/Debug-iphoneos/FluentUIResources-ios.bundle/
 
 make_dir_if_necessary "nuget/Ship-iphoneos"
 echo "Copy Ship-iphoneos build output into nuget folder"
 rsync -a Release-iphoneos/libFluentUI.a nuget/Ship-iphoneos/
 rsync_excluding_swift_source_info_files Release-iphoneos/FluentUI.swiftmodule/ nuget/Ship-iphoneos/FluentUI.swiftmodule/
 rsync -a Release-iphoneos/FluentUIResources-ios.bundle/ nuget/Ship-iphoneos/FluentUIResources-ios.bundle/
-
-make_dir_if_necessary "nuget/Debug-iphonesimulator"
-echo "Copy Debug-iphonesimulator build output into nuget folder"
-rsync -a Debug-iphonesimulator/libFluentUI.a nuget/Debug-iphonesimulator/
-rsync_excluding_swift_source_info_files Debug-iphonesimulator/FluentUI.swiftmodule/ nuget/Debug-iphonesimulator/FluentUI.swiftmodule/
-rsync -a Debug-iphonesimulator/FluentUIResources-ios.bundle/ nuget/Debug-iphonesimulator/FluentUIResources-ios.bundle/
 
 make_dir_if_necessary "nuget/Ship-iphonesimulator"
 echo "Copy Ship-iphonesimulator build output into nuget folder"
@@ -87,6 +72,6 @@ cd "nuget"
 
 # Zip the build output
 echo "Creating zip archive named BuildOutput.zip containing all the platform folders"
-zip --symlinks -r BuildOutput.zip Debug-macosx/ Ship-macosx/ Debug-iphoneos/ Ship-iphoneos/ Debug-iphonesimulator/ Ship-iphonesimulator/ include/
+zip --symlinks -r BuildOutput.zip Ship-macosx/ Ship-iphoneos/ Ship-iphonesimulator/ include/
 
 exit $?
